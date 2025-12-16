@@ -1,0 +1,22 @@
+{
+  "name": "TaskTimer Analog",
+  "short_name": "TaskTimer",
+  "description": "Visual analog clock timer with countdown modes",
+  "start_url": "TaskTimerAnalog.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff6b35",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
