@@ -1009,19 +1009,11 @@ console.log('----------------------------------');
   const dom = createDOM();
   const { document } = dom.window;
 
-  // Should have control-row elements
+  // Should have control-row elements (4 rows in Option 9 layout)
   const controlRows = document.querySelectorAll('.control-row');
   assert(controlRows.length >= 3, 'At least 3 control-row elements exist');
 
-  // Mode row should have "Mode:" label
-  const modeLabel = document.querySelector('.control-row label');
-  assertNotNull(modeLabel, 'Control row has a label element');
-
-  // Check for specific labels (Labels: removed to make room for display mode button)
-  const labels = document.querySelectorAll('.control-row label');
-  const labelTexts = Array.from(labels).map(l => l.textContent);
-  assert(labelTexts.some(t => t.includes('Mode')), 'Mode label exists');
-  assert(labelTexts.some(t => t.includes('Time')), 'Time label exists');
+  // Labels removed in Option 9 layout - controls are self-explanatory with icons and tooltips
 
   dom.window.close();
 })();

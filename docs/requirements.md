@@ -114,5 +114,8 @@
 - [x] 90. Digital completion: static colored center + pulsing ring + overtime counter (-0:01, -0:02...)
 - [x] 91. Display mode preference: saved in cookie and URL hash (display=digital)
 
+## UI Improvements
+- [x] 92. Control layout redesign with segmented button groups and CSS tooltips
+
 ## Future Enhancements
 - [ ] 61. Safari PiP support: re-enable when Safari supports canvas captureStream with PiP (check WebKit bug 181663)
