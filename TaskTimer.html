@@ -501,7 +501,7 @@
       </div>
       <div class="divider"></div>
       <div class="control-row">
-        <button class="icon-btn" id="soundBtn" title="Turn alarm off" aria-label="Toggle alarm sound">🔔</button>
+        <button class="icon-btn" id="soundBtn" title="Turn alarm on" aria-label="Toggle alarm sound">🔕</button>
         <span style="flex: 1;"></span>
         <button class="fullscreen-btn" id="pipBtn" title="Picture-in-Picture mode" aria-label="Picture-in-Picture">⧉</button>
         <button class="fullscreen-btn" id="fullscreenBtn" title="Go full-screen" aria-label="Toggle fullscreen">⛶</button>
@@ -714,8 +714,8 @@
         if (document.body.classList.contains('dark')) {
           params.push('dark=1');
         }
-        if (state.sound === false) {
-          params.push('sound=off');
+        if (state.sound === true) {
+          params.push('sound=on');
         }
         if (state.displayMode === 'digital') {
           params.push('display=digital');
@@ -1003,7 +1003,7 @@
       color: '#ff6b35',
       mode: 'ccw',
       marks: 15,
-      sound: true,
+      sound: false,
       displayMode: 'analog',
       timeValue: '',
       total: 0,
@@ -1550,9 +1550,6 @@
       const parsed = parseInput(input);
       if (!parsed) return;
 
-      // Request notification permission on first timer start
-      ClockLogic.requestNotificationPermission();
-
       // Stop completion blink if active
       stopCompletionBlink();
 
@@ -1905,10 +1902,10 @@
       }
 
       var savedSound = ClockLogic.getCookie('clockSound');
-      if (savedSound === 'off') {
-        state.sound = false;
-        el.soundBtn.textContent = '🔕';
-        el.soundBtn.title = 'Turn alarm on';
+      if (savedSound === 'on') {
+        state.sound = true;
+        el.soundBtn.textContent = '🔔';
+        el.soundBtn.title = 'Turn alarm off';
       }
 
       var savedDisplayMode = ClockLogic.getCookie('clockDisplayMode');
@@ -1937,10 +1934,10 @@
         el.darkModeBtn.textContent = '☀️';
         el.darkModeBtn.title = 'Switch to light mode';
       }
-      if (hashParams.sound === 'off') {
-        state.sound = false;
-        el.soundBtn.textContent = '🔕';
-        el.soundBtn.title = 'Turn alarm on';
+      if (hashParams.sound === 'on') {
+        state.sound = true;
+        el.soundBtn.textContent = '🔔';
+        el.soundBtn.title = 'Turn alarm off';
       }
       if (hashParams.display === 'digital') {
         state.displayMode = 'digital';
@@ -1969,6 +1966,11 @@
           el.markBtns[i].classList.add('active');
         }
       }
+
+      // Request notification permission immediately if sound is enabled
+      if (state.sound) {
+        ClockLogic.requestNotificationPermission();
+      }
     })();
 
     // Dark mode toggle
@@ -1989,6 +1991,10 @@
       el.soundBtn.title = state.sound ? 'Turn alarm off' : 'Turn alarm on';
       ClockLogic.setCookie('clockSound', state.sound ? 'on' : 'off', 365);
       ClockLogic.updateHash(state);
+      // Request notification permission when sound is enabled
+      if (state.sound) {
+        ClockLogic.requestNotificationPermission();
+      }
     });
 
     // Display mode toggle (analog/digital)

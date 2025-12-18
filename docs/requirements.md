@@ -123,6 +123,7 @@
 - [x] 95. Pre-cached audio: beep sound generated on page load for faster playback
 - [x] 96. Mobile vibration: Vibration API pattern (750ms on, 375ms off) synced with audio beeps
 - [x] 97. Time value in URL hash: shareable links include timer duration
+- [x] 98. Alarm off by default: notification permission requested only when alarm is enabled
 
 ## Future Enhancements
 - [ ] 61. Safari PiP support: re-enable when Safari supports canvas captureStream with PiP (check WebKit bug 181663)

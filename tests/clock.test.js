@@ -1551,16 +1551,16 @@ console.log('-------------------------------');
 
   const soundBtn = document.getElementById('soundBtn');
 
-  // Default should be sound on (bell icon)
-  assertEqual(soundBtn.textContent, '🔔', 'Sound is on by default (bell icon)');
+  // Default should be sound off (muted icon)
+  assertEqual(soundBtn.textContent, '🔕', 'Sound is off by default (muted icon)');
 
-  // Click to toggle off
+  // Click to toggle on
   soundBtn.click();
-  assertEqual(soundBtn.textContent, '🔕', 'Sound toggles to off (muted icon)');
+  assertEqual(soundBtn.textContent, '🔔', 'Sound toggles to on (bell icon)');
 
-  // Click to toggle back on
+  // Click to toggle back off
   soundBtn.click();
-  assertEqual(soundBtn.textContent, '🔔', 'Sound toggles back on');
+  assertEqual(soundBtn.textContent, '🔕', 'Sound toggles back off');
 
   dom.window.close();
 })();
@@ -1570,9 +1570,9 @@ console.log('-------------------------------');
   const { document } = dom.window;
 
   const soundBtn = document.getElementById('soundBtn');
-  soundBtn.click(); // Turn off
+  soundBtn.click(); // Turn on (default is off)
 
-  assert(document.cookie.includes('clockSound=off'), 'Sound preference saved to cookie');
+  assert(document.cookie.includes('clockSound=on'), 'Sound preference saved to cookie');
 
   dom.window.close();
 })();
@@ -1670,13 +1670,13 @@ console.log('---------------------------------');
   const { document } = dom.window;
 
   const soundBtn = document.getElementById('soundBtn');
-  soundBtn.click(); // Turn off
+  soundBtn.click(); // Turn on (default is off)
 
-  assert(dom.window.location.hash.includes('sound=off'), 'Sound off updates URL hash');
+  assert(dom.window.location.hash.includes('sound=on'), 'Sound on updates URL hash');
 
-  soundBtn.click(); // Turn on - should remove from hash or set to on
-  // When sound is on (default), it shouldn't be in hash
-  assert(!dom.window.location.hash.includes('sound=off'), 'Sound on removes from URL hash');
+  soundBtn.click(); // Turn off - should remove from hash (off is default)
+  // When sound is off (default), it shouldn't be in hash
+  assert(!dom.window.location.hash.includes('sound=on'), 'Sound off removes from URL hash');
 
   dom.window.close();
 })();
