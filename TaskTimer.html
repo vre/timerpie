@@ -387,6 +387,16 @@
       font-size: 1rem;
       text-align: center;
     }
+    /* Focus styles for keyboard navigation */
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid #3b82f6;
+      outline-offset: 2px;
+    }
+    body.dark button:focus-visible,
+    body.dark input:focus-visible {
+      outline-color: #60a5fa;
+    }
     .go-btn {
       height: 2.5rem;
       padding: 0 1.25rem;
