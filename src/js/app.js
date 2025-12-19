@@ -441,8 +441,11 @@
       if (state.mode === 'end' && state.endTime !== null && state.remaining < 2) {
         const now = new Date();
         const curMin = now.getMinutes() + now.getSeconds() / 60;
-        // Check if we've reached or passed the end time (within same hour context)
-        if (curMin >= state.endTime && curMin < state.endTime + 30) {
+        // Check if we've reached or passed the end time
+        // Handle hour rollover: if endTime > 30 and curMin < 30, we've rolled over to next hour
+        const reachedEndTime = curMin >= state.endTime ||
+          (state.endTime > 30 && curMin < 30);
+        if (reachedEndTime) {
           state.remaining = 0;
         }
       }
