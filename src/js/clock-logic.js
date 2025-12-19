@@ -438,7 +438,7 @@
       // Render wedges to canvas context
       renderWedgesToCanvas: function(ctx, width, height, circles, mode, color, running, displayMode, endTime, now, center) {
         const self = this;
-        ctx.clearRect(0, 0, width, height);
+        ctx.clearRect(-15, 0, width, height); // viewBox starts at -15
         if (circles.length === 0) return;
 
         const timerEnd = this.getTimerEndAngle(circles[0], mode, endTime, now);

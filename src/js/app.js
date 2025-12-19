@@ -133,14 +133,14 @@
       const containerWidth = container.clientWidth;
       const containerHeight = container.clientHeight;
 
-      // SVG viewBox is 450x460, calculate scale to fit container
-      const scaleX = containerWidth / 450;
+      // SVG viewBox is 480x460 (starts at -15), calculate scale to fit container
+      const scaleX = containerWidth / 480;
       const scaleY = containerHeight / 460;
       const scale = Math.min(scaleX, scaleY);
       canvasScale = scale;
 
       // Size wrapper to scaled dimensions
-      const scaledWidth = 450 * scale;
+      const scaledWidth = 480 * scale;
       const scaledHeight = 460 * scale;
       clockWrapper.style.width = scaledWidth + 'px';
       clockWrapper.style.height = scaledHeight + 'px';
@@ -153,8 +153,8 @@
         el.wedgeCanvas.height = scaledHeight * dpr;
         el.wedgeCanvas.style.width = scaledWidth + 'px';
         el.wedgeCanvas.style.height = scaledHeight + 'px';
-        // Scale context to draw in SVG viewBox coordinates
-        wedgeCtx.setTransform(scale * dpr, 0, 0, scale * dpr, 0, 0);
+        // Scale context to draw in SVG viewBox coordinates (viewBox starts at -15)
+        wedgeCtx.setTransform(scale * dpr, 0, 0, scale * dpr, 15 * scale * dpr, 0);
       }
 
       // SVG scales via CSS (vector graphics stay crisp)
@@ -300,7 +300,7 @@
       if (wedgeCtx && el.wedgeCanvas) {
         ClockLogic.renderWedgesToCanvas(
           wedgeCtx,
-          450, // SVG viewBox width
+          480, // SVG viewBox width
           460, // SVG viewBox height
           circles,
           state.mode,

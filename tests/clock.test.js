@@ -1037,11 +1037,11 @@ console.log('-----------------------------------------');
 
   const svg = document.getElementById('clock');
 
-  // SVG should have viewBox for responsive scaling with bottom padding for labels
-  assertEqual(svg.getAttribute('viewBox'), '0 0 450 460', 'SVG has viewBox with bottom padding for labels');
+  // SVG should have viewBox for responsive scaling with side/bottom padding for labels
+  assertEqual(svg.getAttribute('viewBox'), '-15 0 480 460', 'SVG has viewBox with side padding for labels');
 
   // SVG should have fixed dimensions matching viewBox (CSS handles scaling)
-  assertEqual(svg.getAttribute('width'), '450', 'SVG width matches viewBox');
+  assertEqual(svg.getAttribute('width'), '480', 'SVG width matches viewBox');
   assertEqual(svg.getAttribute('height'), '460', 'SVG height matches viewBox');
 
   dom.window.close();
