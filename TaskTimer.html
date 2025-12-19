@@ -2002,7 +2002,14 @@
         if (sanitizedTime && sanitizedTime.length <= 10) {
           el.timeInput.value = sanitizedTime;
           state.timeValue = sanitizedTime;
-          el.goBtn.disabled = false;
+          // Parse input to set state.total/remaining (same as input handler)
+          var parsed = ClockLogic.parseInput(sanitizedTime, state.mode, new Date(), MAX_MINUTES);
+          if (parsed) {
+            state.total = parsed.total;
+            state.remaining = parsed.total;
+            state.endTime = parsed.endTime;
+            el.goBtn.disabled = false;
+          }
         }
       }
 
@@ -2320,7 +2327,10 @@
     });
 
     el.colorBtn.style.background = state.color;
-    el.goBtn.disabled = true;
+    // Only disable Go button if no time was loaded from URL
+    if (!state.total) {
+      el.goBtn.disabled = true;
+    }
     el.goBtn.title = 'Start the timer';
     el.timeInput.title = state.mode === 'end' ? 'End time (hh:mm, hhmm, or mm)' : 'Minutes (1-180)';
 
