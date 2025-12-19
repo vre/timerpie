@@ -1111,7 +1111,8 @@
     function updatePip() {
       if (pipState.active) {
         renderToCanvas();
-        requestAnimationFrame(updatePip);
+        // Use setTimeout at 30fps to match captureStream(30) rate, saves CPU
+        setTimeout(updatePip, 33);
       }
     }
 
