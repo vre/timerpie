@@ -1755,81 +1755,86 @@
       });
     }
 
-    for (let i = 0; i < el.modeBtns.length; i++) {
-      el.modeBtns[i].addEventListener('click', function() {
-        for (let j = 0; j < el.modeBtns.length; j++) {
-          el.modeBtns[j].classList.remove('active');
-        }
-        this.classList.add('active');
-        state.mode = this.dataset.mode;
-        el.timeInput.placeholder = state.mode === 'end' ? 'hh:mm' : 'mins';
-        el.timeInput.title = state.mode === 'end' ? 'End time (hh:mm, hhmm, or mm)' : 'Minutes (1-180)';
-        ClockLogic.setCookie('clockMode', state.mode, 365);
-        ClockLogic.updateHash(state);
+    // Helper to set up mutually exclusive button groups
+    function setupButtonGroup(buttons, callback) {
+      for (let i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', function() {
+          for (let j = 0; j < buttons.length; j++) {
+            buttons[j].classList.remove('active');
+          }
+          this.classList.add('active');
+          callback(this);
+        });
+      }
+    }
 
-        // Handle mode change
-        if (state.running) {
-          if (state.mode === 'end') {
-            // Calculate and show end time when switching to END while running
-            const now = new Date();
-            const endDate = new Date(now.getTime() + state.remaining * 60000);
-            const h = endDate.getHours();
-            const m = endDate.getMinutes();
-            const s = endDate.getSeconds();
-            el.timeInput.value = h + ':' + (m < 10 ? '0' : '') + m;
-            state.endTime = m + s / 60; // Preserve seconds precision
-            // No pause in END mode
-            el.goBtn.disabled = true;
-          } else {
-            // Show remaining minutes when switching to CCW/CW while running
-            el.timeInput.value = Math.ceil(state.remaining);
-            state.endTime = null;
-            // Enable pause in CCW/CW modes
-            el.goBtn.disabled = false;
-            el.goBtn.textContent = 'Pause';
-            el.goBtn.title = 'Pause the timer';
-          }
-        } else if (state.mode === 'end' && !state.running && !state.paused && el.timeInput.value.trim()) {
-          // Handle preview animation on mode change (only when not paused)
-          const parsed = parseInput(el.timeInput.value.trim());
-          if (parsed) {
-            state.total = parsed.total;
-            state.remaining = parsed.total;
-            state.endTime = parsed.endTime;
-            startPreviewAnimation();
-          }
+    function selectButton(buttons, dataAttr, value) {
+      for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove('active');
+        if (buttons[i].dataset[dataAttr] === String(value)) {
+          buttons[i].classList.add('active');
+        }
+      }
+    }
+
+    setupButtonGroup(el.modeBtns, function(btn) {
+      state.mode = btn.dataset.mode;
+      el.timeInput.placeholder = state.mode === 'end' ? 'hh:mm' : 'mins';
+      el.timeInput.title = state.mode === 'end' ? 'End time (hh:mm, hhmm, or mm)' : 'Minutes (1-180)';
+      ClockLogic.setCookie('clockMode', state.mode, 365);
+      ClockLogic.updateHash(state);
+
+      // Handle mode change
+      if (state.running) {
+        if (state.mode === 'end') {
+          // Calculate and show end time when switching to END while running
+          const now = new Date();
+          const endDate = new Date(now.getTime() + state.remaining * 60000);
+          const h = endDate.getHours();
+          const m = endDate.getMinutes();
+          const s = endDate.getSeconds();
+          el.timeInput.value = h + ':' + (m < 10 ? '0' : '') + m;
+          state.endTime = m + s / 60; // Preserve seconds precision
+          // No pause in END mode
+          el.goBtn.disabled = true;
         } else {
-          stopPreviewAnimation();
+          // Show remaining minutes when switching to CCW/CW while running
+          el.timeInput.value = Math.ceil(state.remaining);
+          state.endTime = null;
+          // Enable pause in CCW/CW modes
+          el.goBtn.disabled = false;
+          el.goBtn.textContent = 'Pause';
+          el.goBtn.title = 'Pause the timer';
         }
-        // Re-initialize clock face for CW mode label mirroring
-        initClockFace();
-        render();
-      });
-    }
+      } else if (state.mode === 'end' && !state.running && !state.paused && el.timeInput.value.trim()) {
+        // Handle preview animation on mode change (only when not paused)
+        const parsed = parseInput(el.timeInput.value.trim());
+        if (parsed) {
+          state.total = parsed.total;
+          state.remaining = parsed.total;
+          state.endTime = parsed.endTime;
+          startPreviewAnimation();
+        }
+      } else {
+        stopPreviewAnimation();
+      }
+      // Re-initialize clock face for CW mode label mirroring
+      initClockFace();
+      render();
+    });
 
-    for (let i = 0; i < el.markBtns.length; i++) {
-      el.markBtns[i].addEventListener('click', function() {
-        for (let j = 0; j < el.markBtns.length; j++) {
-          el.markBtns[j].classList.remove('active');
-        }
-        this.classList.add('active');
-        state.marks = parseInt(this.dataset.marks);
-        ClockLogic.setCookie('clockMarks', state.marks, 365);
-        ClockLogic.updateHash(state);
-        initClockFace();
-        render();
-      });
-    }
+    setupButtonGroup(el.markBtns, function(btn) {
+      state.marks = parseInt(btn.dataset.marks);
+      ClockLogic.setCookie('clockMarks', state.marks, 365);
+      ClockLogic.updateHash(state);
+      initClockFace();
+      render();
+    });
 
     function switchToEndMode() {
       if (state.mode !== 'end') {
         state.mode = 'end';
-        for (let i = 0; i < el.modeBtns.length; i++) {
-          el.modeBtns[i].classList.remove('active');
-          if (el.modeBtns[i].dataset.mode === 'end') {
-            el.modeBtns[i].classList.add('active');
-          }
-        }
+        selectButton(el.modeBtns, 'mode', 'end');
         el.timeInput.placeholder = 'hh:mm';
       }
     }
