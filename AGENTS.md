@@ -30,10 +30,12 @@ npm test       # Run tests (builds first, then tests TaskTimer.html)
 npm start      # Start local server at http://localhost:8080
 ```
 
+## Testing
+Tests run against built `TaskTimer.html`, not `src/` directly. The `pretest` hook rebuilds from src/ before each test run, so stale artifacts are not an issue. Always use `npm test`.
+
 ## Development
 - **Local server**: `npm start` then open <http://localhost:8080>
 - **File protocol**: Open `src/index.html` directly in browser (works for most features)
-Tests in `tests/clock.test.js` using JSDOM.
 
 ## Architecture
 - `ClockLogic` object: pure functions (parsing, rendering math, cookies, URL hash)

@@ -166,6 +166,18 @@ Changes listed in chronological order. Deprecated features marked with ~striketh
 ### Mobile
 112. Touch auto-hide: controls fully hide on touch devices, tap clock to toggle, auto-shows when timer stops
 
+### Code Review Fixes (Dec 19 PM)
+113. FIX: Input validation - reject malformed hh:mm input (":5", "10:", etc.) in END mode
+114. FIX: Memory leak - revoke worker blob URL after worker creation
+115. FIX: Cookie security - reject values over 4KB limit
+116. FIX: Accessibility - CSS tooltips now visible on keyboard focus (not just hover)
+117. FIX: Performance - PiP render rate matched to 30fps capture rate
+118. FIX: END mode - hour rollover edge case handled correctly
+119. FIX: Build script - more robust regex for tag stripping
+120. FIX: Performance - lazy-generate beep audio (saves ~66KB work on page load)
+121. FIX: Accessibility - announce pause/resume to screen readers
+122. PWA: theme-color meta tag updates to match selected clock color
+
 ## Future
 
 - Safari PiP support: re-enable when Safari supports canvas captureStream with PiP (WebKit bug 181663)
