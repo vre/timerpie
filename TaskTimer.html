@@ -98,14 +98,12 @@
       display: none;
     }
     body.running .controls {
-      opacity: 0;
-      pointer-events: none;
+      opacity: 0.1;
       transition: opacity 0.3s;
     }
     body.running .controls:hover,
     body.running .controls:focus-within {
       opacity: 1;
-      pointer-events: auto;
     }
     /* Touch devices: class-based visibility overrides CSS rules */
     .controls.touch-hidden {
