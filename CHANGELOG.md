@@ -177,6 +177,7 @@ Changes listed in chronological order. Deprecated features marked with ~striketh
 120. FIX: Performance - lazy-generate beep audio (saves ~66KB work on page load)
 121. FIX: Accessibility - announce pause/resume to screen readers
 122. PWA: theme-color meta tag updates to match selected clock color
+123. Standardize on ES6: convert clock-logic.js from var to const/let
 
 ## Future
 
