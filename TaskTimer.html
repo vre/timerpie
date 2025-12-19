@@ -19,11 +19,12 @@
       padding: 0;
       box-sizing: border-box;
     }
-    /* Custom CSS tooltips */
+    /* Custom CSS tooltips - visible on hover and keyboard focus */
     [title] {
       position: relative;
     }
-    [title]:hover::after {
+    [title]:hover::after,
+    [title]:focus-visible::after {
       content: attr(title);
       position: absolute;
       bottom: 100%;
