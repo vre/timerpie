@@ -83,7 +83,7 @@
     const state = {
       color: '#ff6b35',
       mode: 'ccw',
-      marks: 15,
+      marks: 5,
       sound: false,
       displayMode: 'analog',
       timeValue: '',

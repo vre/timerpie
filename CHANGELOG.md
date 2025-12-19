@@ -180,6 +180,7 @@ Changes listed in chronological order. Deprecated features marked with ~striketh
 123. Standardize on ES6: convert clock-logic.js from var to const/let
 124. Controls visibility: pure JS implementation replacing CSS class juggling for reliable hover/click behavior
 125. Mobile labels: added side padding to viewBox so 15/45 labels aren't cut off
+126. UI defaults: swapped CW/CCW button order, 5-min marks now default
 
 ## Future
 

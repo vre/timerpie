@@ -440,13 +440,13 @@ console.log('-------------------------------');
   const modeBtns = document.querySelectorAll('[data-mode]');
   const timeInput = document.getElementById('time');
 
-  // Initially CCW is active
-  assert(modeBtns[0].classList.contains('active'), 'CCW button is initially active');
+  // Initially CCW is active (button order: CW, CCW, END)
+  assert(modeBtns[1].classList.contains('active'), 'CCW button is initially active');
 
   // Click CW
-  modeBtns[1].click();
-  assert(modeBtns[1].classList.contains('active'), 'CW button is active');
-  assert(!modeBtns[0].classList.contains('active'), 'CCW button not active');
+  modeBtns[0].click();
+  assert(modeBtns[0].classList.contains('active'), 'CW button is active');
+  assert(!modeBtns[1].classList.contains('active'), 'CCW button not active');
 
   // Click END
   modeBtns[2].click();
@@ -669,8 +669,8 @@ console.log('------------------------------------------');
   const timeInput = document.getElementById('time');
   const modeBtns = document.querySelectorAll('[data-mode]');
 
-  // Start in CCW mode
-  assert(modeBtns[0].classList.contains('active'), 'Initially in CCW mode');
+  // Start in CCW mode (button order: CW, CCW, END)
+  assert(modeBtns[1].classList.contains('active'), 'Initially in CCW mode');
 
   // Type 4 digits - should switch to END mode
   timeInput.value = '1245';
@@ -678,7 +678,7 @@ console.log('------------------------------------------');
   assert(modeBtns[2].classList.contains('active'), 'Switches to END mode on 4-digit input');
 
   // Reset to CCW
-  modeBtns[0].click();
+  modeBtns[1].click();
   timeInput.value = '';
   timeInput.dispatchEvent(new dom.window.Event('input'));
 
@@ -779,8 +779,8 @@ console.log('------------------------------------------');
   const ccw15 = Array.from(texts).find(t => t.textContent === '15');
   assert(parseFloat(ccw15.getAttribute('x')) > 225, 'CCW mode: 15 on right');
 
-  // Switch to CW mode: 15 on left
-  modeBtns[1].click();
+  // Switch to CW mode: 15 on left (CW is at index 0)
+  modeBtns[0].click();
   texts = svg.querySelectorAll('text');
   const cw15 = Array.from(texts).find(t => t.textContent === '15');
   assert(parseFloat(cw15.getAttribute('x')) < 225, 'CW mode: 15 on left');
@@ -1163,8 +1163,8 @@ console.log('-------------------------------------');
 
   const modeBtns = document.querySelectorAll('[data-mode]');
 
-  // Switch to CW mode
-  modeBtns[1].click();
+  // Switch to CW mode (CW is at index 0)
+  modeBtns[0].click();
   assert(document.cookie.includes('clockMode=cw'), 'Cookie set to cw on mode change');
 
   // Switch to END mode
@@ -1224,9 +1224,9 @@ console.log('-------------------------------------');
   });
   const { document } = dom.window;
 
-  // Check preferences were restored
+  // Check preferences were restored (button order: CW=0, CCW=1, END=2)
   assertEqual(document.getElementById('colorBtn').style.background, 'rgb(74, 144, 226)', 'Color restored from cookie');
-  assert(document.querySelectorAll('[data-mode]')[1].classList.contains('active'), 'CW mode restored from cookie');
+  assert(document.querySelectorAll('[data-mode]')[0].classList.contains('active'), 'CW mode restored from cookie');
   assert(document.querySelectorAll('[data-marks]')[1].classList.contains('active'), '5-min marks restored from cookie');
 
   dom.window.close();
@@ -1337,10 +1337,10 @@ console.log('----------------------------');
   assertEqual(document.getElementById('darkModeBtn').title, 'Switch to dark mode', 'Dark mode button has tooltip');
   assertEqual(document.getElementById('fullscreenBtn').title, 'Go full-screen', 'Fullscreen button has tooltip');
 
-  // Mode buttons
+  // Mode buttons (order: CW, CCW, END)
   const modeButtons = document.querySelectorAll('[data-mode]');
-  assertEqual(modeButtons[0].title, 'Counter-clockwise mode', 'CCW button has tooltip');
-  assertEqual(modeButtons[1].title, 'Clockwise mode', 'CW button has tooltip');
+  assertEqual(modeButtons[0].title, 'Clockwise mode', 'CW button has tooltip');
+  assertEqual(modeButtons[1].title, 'Counter-clockwise mode', 'CCW button has tooltip');
   assertEqual(modeButtons[2].title, 'Ending time mode', 'END button has tooltip');
 
   // Marks buttons
@@ -1475,8 +1475,8 @@ console.log('-------------------------------');
   colorOptions[1].click(); // Blue
   assert(dom.window.location.hash.includes('color=4a90e2'), 'Hash updated with color');
 
-  // Change mode
-  document.querySelectorAll('[data-mode]')[1].click(); // CW
+  // Change mode (CW is at index 0)
+  document.querySelectorAll('[data-mode]')[0].click(); // CW
   assert(dom.window.location.hash.includes('mode=cw'), 'Hash updated with mode');
 
   // Change marks
@@ -1495,9 +1495,9 @@ console.log('-------------------------------');
   });
   const { document } = dom.window;
 
-  // Check settings were applied from URL
+  // Check settings were applied from URL (button order: CW=0, CCW=1, END=2)
   assertEqual(document.getElementById('colorBtn').style.background, 'rgb(74, 144, 226)', 'Color loaded from URL');
-  assert(document.querySelectorAll('[data-mode]')[1].classList.contains('active'), 'CW mode loaded from URL');
+  assert(document.querySelectorAll('[data-mode]')[0].classList.contains('active'), 'CW mode loaded from URL');
   assert(document.querySelectorAll('[data-marks]')[1].classList.contains('active'), '5-min marks loaded from URL');
   assert(document.body.classList.contains('dark'), 'Dark mode loaded from URL');
   assertEqual(document.getElementById('time').value, '45', 'Time loaded from URL');
