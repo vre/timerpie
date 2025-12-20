@@ -8,7 +8,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#ff6b35">
+  <meta name="theme-color" content="#f9fafb">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="manifest" href="manifest.json">
@@ -1770,9 +1770,6 @@
         e.stopPropagation();
         state.color = this.dataset.color;
         el.colorBtn.style.background = state.color;
-        // Update PWA theme color to match
-        var themeColor = document.querySelector('meta[name="theme-color"]');
-        if (themeColor) themeColor.setAttribute('content', state.color);
         el.colorMenu.classList.remove('show');
         el.colorBtn.setAttribute('aria-expanded', 'false');
         el.colorBtn.focus();
@@ -2060,6 +2057,9 @@
       var isDark = document.body.classList.contains('dark');
       el.darkModeBtn.textContent = isDark ? '☀️' : '🌙';
       el.darkModeBtn.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+      // Update PWA theme color to match mode
+      var themeColor = document.querySelector('meta[name="theme-color"]');
+      if (themeColor) themeColor.setAttribute('content', isDark ? '#111' : '#f9fafb');
       ClockLogic.setCookie('clockDarkMode', isDark ? '1' : '0', 365);
       ClockLogic.updateHash(state);
       initClockFace();
@@ -2448,9 +2448,12 @@
     });
 
     el.colorBtn.style.background = state.color;
-    // Update PWA theme color to match selected color
+    // Update PWA theme color to match dark/light mode
     var themeColorMeta = document.querySelector('meta[name="theme-color"]');
-    if (themeColorMeta) themeColorMeta.setAttribute('content', state.color);
+    if (themeColorMeta) {
+      var isDark = document.body.classList.contains('dark');
+      themeColorMeta.setAttribute('content', isDark ? '#111' : '#f9fafb');
+    }
     // Only disable Go button if no time was loaded from URL
     if (!state.total) {
       el.goBtn.disabled = true;

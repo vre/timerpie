@@ -184,6 +184,7 @@ Changes listed in chronological order. Deprecated features marked with ~striketh
 127. Screenshot automation: `scripts/screenshots.sh` with Chrome headless + ImageMagick
 128. URL params for automation: `autostart=1` starts timer on load, `controls=0` hides controls
 129. FIX: Tooltip line-height inheritance from icon buttons
+130. PWA theme-color: follows light/dark mode instead of pie color (cleaner status bar on mobile)
 
 ## Future
 
