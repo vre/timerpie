@@ -189,6 +189,11 @@ Changes listed in chronological order. Deprecated features marked with ~striketh
 132. Install instructions: clickable link in info modal shows platform-specific PWA install steps, embedded QR code, focus trapping for accessibility
 133. Build-time version: version number injected from package.json during build
 
+## 2025-12-23
+
+### Bug Fixes
+134. FIX: Dark mode edge line - moving edge now white in dark mode, black in light mode
+
 ## Future
 
 - Safari PiP support: re-enable when Safari supports canvas captureStream with PiP (WebKit bug 181663)

@@ -664,7 +664,7 @@
     <div class="info-modal" id="infoModal" role="dialog" aria-labelledby="infoTitle" aria-modal="true">
       <div class="info-content">
         <h2 id="infoTitle">TimerPie</h2>
-        <p class="info-version">Version 1.0.0</p>
+        <p class="info-version">Version <span id="appVersion">1.0.0</span></p>
         <p class="info-description">Analog countdown timer that runs entirely in your browser.</p>
         <ul class="info-features">
           <li>Works on desktop, tablet &amp; mobile</li>
@@ -1144,7 +1144,7 @@
       },
 
       // Render wedges to canvas context
-      renderWedgesToCanvas: function(ctx, width, height, circles, mode, color, running, displayMode, endTime, now, center) {
+      renderWedgesToCanvas: function(ctx, width, height, circles, mode, color, running, displayMode, endTime, now, center, isDark) {
         const self = this;
         ctx.clearRect(-15, 0, width, height); // viewBox starts at -15
         if (circles.length === 0) return;
@@ -1234,7 +1234,7 @@
             const movingX = center + radius * Math.cos(movingRad);
             const movingY = center + radius * Math.sin(movingRad);
             ctx.beginPath();
-            ctx.strokeStyle = '#000';
+            ctx.strokeStyle = isDark ? '#fff' : '#000';
             if (displayMode === 'digital') {
               ctx.moveTo(center + innerR * Math.cos(movingRad), center + innerR * Math.sin(movingRad));
             } else {
@@ -1570,7 +1570,8 @@
           state.displayMode,
           state.endTime,
           new Date(),
-          CENTER
+          CENTER,
+          document.body.classList.contains('dark')
         );
       }
 

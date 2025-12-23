@@ -17,7 +17,7 @@ let output = html
   // Inject combined content
   .replace('<!-- BUILD:CSS -->', `<style>\n${css}  </style>`)
   .replace('<!-- BUILD:JS -->', `<script>\n${logic}\n${app}  </script>`)
-  .replace('<!-- BUILD:VERSION -->', pkg.version);
+  .replace('>dev</span>', `>${pkg.version}</span>`);
 
 const outPath = path.join(__dirname, '../TimerPie.html');
 fs.writeFileSync(outPath, output);

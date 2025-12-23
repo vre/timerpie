@@ -436,7 +436,7 @@
       },
 
       // Render wedges to canvas context
-      renderWedgesToCanvas: function(ctx, width, height, circles, mode, color, running, displayMode, endTime, now, center) {
+      renderWedgesToCanvas: function(ctx, width, height, circles, mode, color, running, displayMode, endTime, now, center, isDark) {
         const self = this;
         ctx.clearRect(-15, 0, width, height); // viewBox starts at -15
         if (circles.length === 0) return;
@@ -526,7 +526,7 @@
             const movingX = center + radius * Math.cos(movingRad);
             const movingY = center + radius * Math.sin(movingRad);
             ctx.beginPath();
-            ctx.strokeStyle = '#000';
+            ctx.strokeStyle = isDark ? '#fff' : '#000';
             if (displayMode === 'digital') {
               ctx.moveTo(center + innerR * Math.cos(movingRad), center + innerR * Math.sin(movingRad));
             } else {

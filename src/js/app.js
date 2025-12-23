@@ -315,7 +315,8 @@
           state.displayMode,
           state.endTime,
           new Date(),
-          CENTER
+          CENTER,
+          document.body.classList.contains('dark')
         );
       }
 
