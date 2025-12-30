@@ -404,6 +404,11 @@ console.log('--------------------------------');
   const marksBtns = document.querySelectorAll('[data-marks]');
   assertEqual(marksBtns.length, 3, '3 marks buttons exist (15, 5, -)');
 
+  // Watermark
+  const watermark = document.querySelector('.watermark');
+  assertNotNull(watermark, 'Watermark element exists');
+  assertEqual(watermark.textContent, 'TimerPie', 'Watermark shows TimerPie');
+
   dom.window.close();
 })();
 

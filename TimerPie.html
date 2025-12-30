@@ -448,6 +448,17 @@
       top: 0;
       left: 0;
     }
+    .watermark {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      font-size: clamp(0.75rem, 2vw, 1.5rem);
+      pointer-events: none;
+      color: rgba(51, 51, 51, 0.3);
+    }
+    body.dark .watermark {
+      color: rgba(238, 238, 238, 0.3);
+    }
     .sr-only {
       position: absolute;
       width: 1px;
@@ -659,6 +670,7 @@
           <title id="clockTitle">Countdown Timer</title>
         </svg>
       </div>
+      <div class="watermark">TimerPie</div>
     </div>
     <div id="timerStatus" role="status" aria-live="polite" class="sr-only"></div>
     <div class="info-modal" id="infoModal" role="dialog" aria-labelledby="infoTitle" aria-modal="true">
