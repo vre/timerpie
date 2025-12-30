@@ -882,12 +882,10 @@
         }
       }
 
-      var savedDarkMode = ClockLogic.getCookie('clockDarkMode');
-      if (savedDarkMode === '1') {
-        document.body.classList.add('dark');
-        el.darkModeBtn.textContent = '☀️';
-        el.darkModeBtn.title = 'Switch to light mode';
-      }
+      // Dark mode is default
+      document.body.classList.add('dark');
+      el.darkModeBtn.textContent = '☀️';
+      el.darkModeBtn.title = 'Switch to light mode';
 
       var savedSound = ClockLogic.getCookie('clockSound');
       if (savedSound === 'on') {
@@ -917,10 +915,10 @@
           state.marks = marksVal;
         }
       }
-      if (hashParams.dark === '1') {
-        document.body.classList.add('dark');
-        el.darkModeBtn.textContent = '☀️';
-        el.darkModeBtn.title = 'Switch to light mode';
+      if (hashParams.dark === '0') {
+        document.body.classList.remove('dark');
+        el.darkModeBtn.textContent = '🌙';
+        el.darkModeBtn.title = 'Switch to dark mode';
       }
       if (hashParams.sound === 'on') {
         state.sound = true;
@@ -1001,7 +999,6 @@
       // Update PWA theme color to match mode
       var themeColor = document.querySelector('meta[name="theme-color"]');
       if (themeColor) themeColor.setAttribute('content', isDark ? '#111' : '#f9fafb');
-      ClockLogic.setCookie('clockDarkMode', isDark ? '1' : '0', 365);
       ClockLogic.updateHash(state);
       initClockFace();
     });

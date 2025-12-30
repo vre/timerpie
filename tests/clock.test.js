@@ -1115,28 +1115,53 @@ console.log('----------------------------');
   const darkModeBtn = document.getElementById('darkModeBtn');
   assertNotNull(darkModeBtn, 'Dark mode button exists');
 
-  // Initially light mode
-  assert(!document.body.classList.contains('dark'), 'Body starts in light mode');
+  // Initially dark mode (new default)
+  assert(document.body.classList.contains('dark'), 'Body starts in dark mode');
 
-  // Click to enable dark mode
+  // Click to switch to light mode
   darkModeBtn.click();
-  assert(document.body.classList.contains('dark'), 'Body has dark class after toggle');
+  assert(!document.body.classList.contains('dark'), 'Body loses dark class after toggle');
 
-  // Click to disable dark mode
+  // Click to switch back to dark mode
   darkModeBtn.click();
-  assert(!document.body.classList.contains('dark'), 'Body loses dark class after second toggle');
+  assert(document.body.classList.contains('dark'), 'Body has dark class after second toggle');
 
   dom.window.close();
 })();
 
-(function testDarkModeCookiePersistence() {
-  const dom = createDOM();
+(function testDarkModeHashNotShownWhenDark() {
+  const html = fs.readFileSync(path.join(__dirname, '..', 'TimerPie.html'), 'utf8');
+  const dom = new JSDOM(html, {
+    runScripts: 'dangerously',
+    pretendToBeVisual: true,
+    url: 'http://localhost/'
+  });
   const { document } = dom.window;
 
-  const darkModeBtn = document.getElementById('darkModeBtn');
-  darkModeBtn.click();
+  // Default is dark, hash should not contain dark
+  assert(!dom.window.location.hash.includes('dark='), 'Hash does not include dark when in dark mode');
 
-  assert(document.cookie.includes('clockDarkMode=1'), 'Dark mode preference saved to cookie');
+  // Switch to light mode
+  document.getElementById('darkModeBtn').click();
+  assert(dom.window.location.hash.includes('dark=0'), 'Hash includes dark=0 when in light mode');
+
+  // Switch back to dark
+  document.getElementById('darkModeBtn').click();
+  assert(!dom.window.location.hash.includes('dark='), 'Hash does not include dark after switching back');
+
+  dom.window.close();
+})();
+
+(function testLightModeFromUrl() {
+  const html = fs.readFileSync(path.join(__dirname, '..', 'TimerPie.html'), 'utf8');
+  const dom = new JSDOM(html, {
+    runScripts: 'dangerously',
+    pretendToBeVisual: true,
+    url: 'http://localhost/#dark=0'
+  });
+  const { document } = dom.window;
+
+  assert(!document.body.classList.contains('dark'), 'Body is in light mode when dark=0 in URL');
 
   dom.window.close();
 })();
@@ -1341,7 +1366,7 @@ console.log('----------------------------');
 
   // Static tooltips
   assertEqual(document.getElementById('colorBtn').title, 'Select clock color', 'Color button has tooltip');
-  assertEqual(document.getElementById('darkModeBtn').title, 'Switch to dark mode', 'Dark mode button has tooltip');
+  assertEqual(document.getElementById('darkModeBtn').title, 'Switch to light mode', 'Dark mode button has tooltip (default is dark)');
   assertEqual(document.getElementById('fullscreenBtn').title, 'Go full-screen', 'Fullscreen button has tooltip');
 
   // Mode buttons (order: CW, CCW, END)
@@ -1498,7 +1523,7 @@ console.log('-------------------------------');
   const dom = new JSDOM(html, {
     runScripts: 'dangerously',
     pretendToBeVisual: true,
-    url: 'http://localhost/#color=4a90e2&mode=cw&marks=5&dark=1&time=45'
+    url: 'http://localhost/#color=4a90e2&mode=cw&marks=5&time=45'
   });
   const { document } = dom.window;
 
@@ -1506,7 +1531,7 @@ console.log('-------------------------------');
   assertEqual(document.getElementById('colorBtn').style.background, 'rgb(74, 144, 226)', 'Color loaded from URL');
   assert(document.querySelectorAll('[data-mode]')[0].classList.contains('active'), 'CW mode loaded from URL');
   assert(document.querySelectorAll('[data-marks]')[1].classList.contains('active'), '5-min marks loaded from URL');
-  assert(document.body.classList.contains('dark'), 'Dark mode loaded from URL');
+  assert(document.body.classList.contains('dark'), 'Dark mode is default');
   assertEqual(document.getElementById('time').value, '45', 'Time loaded from URL');
 
   dom.window.close();

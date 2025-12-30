@@ -197,8 +197,8 @@
         if (state.marks !== undefined && state.marks !== 15) {
           params.push('marks=' + state.marks);
         }
-        if (document.body.classList.contains('dark')) {
-          params.push('dark=1');
+        if (!document.body.classList.contains('dark')) {
+          params.push('dark=0');
         }
         if (state.sound === true) {
           params.push('sound=on');
