@@ -194,6 +194,11 @@ Changes listed in chronological order. Deprecated features marked with ~striketh
 ### Bug Fixes
 134. FIX: Dark mode edge line - moving edge now white in dark mode, black in light mode
 
+## 2025-12-30
+
+### Small adjustments
+135.   When selecting time field select the text on focus.   
+
 ## Future
 
 - Safari PiP support: re-enable when Safari supports canvas captureStream with PiP (WebKit bug 181663)

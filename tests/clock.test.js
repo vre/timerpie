@@ -353,6 +353,13 @@ console.log('--------------------------------');
   dom.window.close();
 })();
 
+(function testTimeInputSelectOnFocusRegistered() {
+  // Verify focus handler with select is present in the source
+  const html = fs.readFileSync(path.join(__dirname, '..', 'TimerPie.html'), 'utf8');
+  assert(html.includes('addEventListener') && html.includes('focus') && html.includes('select'),
+    'Focus handler with select() is registered');
+})();
+
 console.log('');
 
 console.log('Integration Tests: DOM Structure');

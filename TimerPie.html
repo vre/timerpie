@@ -2109,6 +2109,11 @@
       }
     });
 
+    el.timeInput.addEventListener('focus', function() {
+      var input = this;
+      setTimeout(function() { input.select(); }, 0);
+    });
+
     el.goBtn.addEventListener('click', handleGoClick);
 
     // Load preferences from cookies and URL hash
