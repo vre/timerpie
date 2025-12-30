@@ -1,6 +1,6 @@
 {
   "name": "timer-pie",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Countdown clock timer",
   "scripts": {
     "pretest": "npm run build",

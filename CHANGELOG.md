@@ -201,6 +201,7 @@ Changes listed in chronological order. Deprecated features marked with ~striketh
 136. By default 5mins entered to the time field. Field selected on page load.
 137. Set dark mode to be the default mode.
 138. Added tooltip to the time field.
+139. Added TimerPie in the low-right corner to promote the app.
 
 ## Future
 

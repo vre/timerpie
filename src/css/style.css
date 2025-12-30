@@ -433,12 +433,13 @@
       left: 0;
     }
     .watermark {
-      position: absolute;
+      position: fixed;
       bottom: 1rem;
       left: 1rem;
       font-size: clamp(0.75rem, 2vw, 1.5rem);
       pointer-events: none;
       color: rgba(51, 51, 51, 0.3);
+      z-index: 1;
     }
     body.dark .watermark {
       color: rgba(238, 238, 238, 0.3);
