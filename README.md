@@ -1,6 +1,6 @@
 # TimerPie
 
-**[▶ Try it now](https://vre.github.io/timerpie/TimerPie.html)**
+**[▶ Try it now](https://vre.github.io/TimerPie/TimerPie.html)**
 
 Analog countdown timer that runs entirely in your browser from single file. No ads, no servers, no tracking, no dependencies.
 
@@ -28,7 +28,7 @@ Analog countdown timer that runs entirely in your browser from single file. No a
 
 ## Usage
 
-Open [TimerPie.html](https://vre.github.io/timerpie/TimerPie.html) in any modern browser. That's it.
+Open [TimerPie.html](https://vre.github.io/TimerPie/TimerPie.html) in any modern browser. That's it.
 You can also copy it to your machine (Save As) and open from there.
 Or when opening from website such as GitHub, you can also install as a Progressive Web App (PWA).
 
